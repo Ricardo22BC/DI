@@ -1,4 +1,4 @@
-<h1>⚽FutStats</h1> 
+<h1>⚽FutStats</h1>
 *La aplicación definitiva para estadísticas y noticias de fútbol*
 
 ---
