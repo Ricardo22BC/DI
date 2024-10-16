@@ -1,11 +1,11 @@
 import tkinter as tk
 
 
-
+#Función para el texto
 def texto():
     texto1 = entrada.get()
     etiqueta_resultado.config(text="Has escrito: " + texto1)
-
+#Funcioón para borrar el texto
 def borrar():
     entrada.delete(0,tk.END)
     etiqueta_resultado.config(text="")
