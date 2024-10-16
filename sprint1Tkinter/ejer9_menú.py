@@ -1,9 +1,9 @@
 import tkinter as tk
 from tkinter import messagebox
-
+#Función para el mensaje de acerca de.
 def acerca_de():
     messagebox.showinfo("Mensaje","Este es el ejercicio 9")
-
+#Función para salir de la aplicación
 def salir_aplicacion():
     root.quit()
 
