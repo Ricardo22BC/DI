@@ -23,7 +23,8 @@ def insertar_texto():
     elementos de la interfaz, lo que permite crear interacciones 
     dinámicas y personalizadas. Mediante la asignación de eventos 
     a botones o campos de entrada, es posible controlar el flujo 
-    de la aplicación y responder a las acciones del usuario de manera eficaz.
+    de la aplicación y responder a las acciones del 
+    usuario de manera eficaz.
     
     Además, gracias a su integración con Python, tkinter ofrece
     una amplia gama de posibilidades para el desarrollo de 
@@ -35,7 +36,7 @@ def insertar_texto():
 #Crear la ventana principal
 root=tk.Tk()
 root.title("Scrollbar")
-root.geometry("400x300")
+root.geometry("550x300")
 
 #Crear un Frame para contener el Text y el Scrollbars
 frame = tk.Frame(root)
