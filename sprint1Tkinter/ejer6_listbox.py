@@ -1,6 +1,6 @@
 import tkinter as tk
 
-from ejer3 import etiqueta
+
 
 #Funciones para la selección los elementos de la lista y ver en una etiqueta la seleccionada.
 def mostrar_selecciones():
