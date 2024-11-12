@@ -3,7 +3,7 @@ import random
 
 class Tesoro:
     def __init__(self): #Establecemos un estado para inicialiar los atributos
-        self.beneficios = ["aumento de ataque","aumento de defensa","restauración de salud"] #Atributos ->self :Es para referirse al objeto mismo.
+        self.beneficios = ["aumento de ataque","aumento de defensa","restauración de salud"] #Atributos -> self:Es para referirse al objeto mismo.
     def encontrar_tesoro(self,heroe): #Método para encontrar el tesoro
         beneficio = random.choice(self.beneficios) #declaramos beneficio que coje un objeto random de lo declarado en beneficios.
         print(f"Héroe ha encontrado un tesoro {beneficio}")  #Si el jugador encuentra un tesoro salta mensaje
