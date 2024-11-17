@@ -33,7 +33,7 @@ class GameModel:
 
         self.start_time=None
         self.moves=0
-
+        self.url_base = "https://raw.githubusercontent.com/Ricardo22BC/DI/e34eeb0303a48236daa57724dd39f5550220ea31/images/"
     def _generate_board(self):
         #Calcula la cantidad de pares de cartas que se necesitan para llenar el tablero
         #self.board_size representa el tamaño de un lado del tablero el cual
@@ -55,9 +55,9 @@ class GameModel:
         #funcion interna que será ejecutada en un hilo independiente
         def load_images_thread():
             #Definimos la URL base
-            url_base ="https://github.com/usuario/repo/imagen_"
+            url_base ="https://raw.githubusercontent.com/Ricardo22BC/DI/refs/heads/main/images/"
             #Cargar la imagen oculta
-            self.hidden_image = descargar_imagen("https://github.com/usuario/repo/hidden.png",(self.cell_size, self.cell_size))
+            self.hidden_image = descargar_imagen(f"{url_base}0.jpg",(self.cell_size, self.cell_size))
 
             #Verificar que la imagen oculta se ha descargado
             if self.hidden_image is None:
@@ -72,7 +72,7 @@ class GameModel:
 
             #Descargar cada imagen con los identificadores unicos
             for image_id in unique_image_ids:
-                image_url=f"{self.url_base}{image_id}.png"
+                image_url=f"{self.url_base}{image_id}.jpg"
                 image = recursos.descargar_imagen(image_url,self.cell_size)
 
             #indicar que todas las imágenes se han descargado y están listas
