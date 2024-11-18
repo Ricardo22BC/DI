@@ -14,26 +14,30 @@ class GameModel:
         self.moves = 0
         self.pairs_found = 0
         self.start_time = None
-        self.images_loaded = threading.Event()
+        self.images_loaded = False
 
         #Determina el tamaño en función a la dificultad elegida.
         #"facil" se asocia con 4 que representa un tablero de 4x4 celdas
         #Después devolvemos el tablero correspondiente a la dificultad
         self.board_size={"fácil":4,"medio":6,"difícil":8}.get(difficulty)
         self.total_pairs = (self.board_size ** 2) // 2
-        # self.board=None
-        # self.images={}
-        # self.hidden_image = None
-        # self.images_loaded = threading.Event()
+        self.board={}
+        self.images={}
+        self.hidden_image = None
+        self.images_loaded = threading.Event()
 
         # self.pairs_found=0
+        self.url_base = "https://raw.githubusercontent.com/Ricardo22BC/DI/refs/heads/main/images/"
+        # Debug: Verifica que self.url_base está correctamente asignado
+        print(f"URL Base: {self.url_base}")
 
         self._generate_board()
         self._load_images()
 
         self.start_time=None
         self.moves=0
-        self.url_base = "https://raw.githubusercontent.com/Ricardo22BC/DI/e34eeb0303a48236daa57724dd39f5550220ea31/images/"
+
+
     def _generate_board(self):
         #Calcula la cantidad de pares de cartas que se necesitan para llenar el tablero
         #self.board_size representa el tamaño de un lado del tablero el cual
@@ -52,38 +56,61 @@ class GameModel:
 
     #Definimos la función y su hilo interno
     def _load_images(self):
-        #funcion interna que será ejecutada en un hilo independiente
-        def load_images_thread():
-            #Definimos la URL base
-            url_base ="https://raw.githubusercontent.com/Ricardo22BC/DI/refs/heads/main/images/"
-            #Cargar la imagen oculta
-            self.hidden_image = descargar_imagen(f"{url_base}0.jpg",(self.cell_size, self.cell_size))
+         #funcion interna que será ejecutada en un hilo independiente
+        def load_images_thread(model):
+            try:
+                # Usa el atributo url_base para cargar la imagen oculta
+                hidden_image = descargar_imagen(f"{model.url_base}0.png", (model.cell_size, model.cell_size))
 
-            #Verificar que la imagen oculta se ha descargado
-            if self.hidden_image is None:
-                print("Error: No se pudo descargar la imagen oculta")
-                return
+                # Verificar que la imagen oculta se ha descargado
+                if hidden_image is None:
+                    print("Error: No se pudo descargar la imagen oculta")
+                    return
 
-            #Obtener identificadores únicos de las imágenes del tablero.
-            unique_image_ids = []
-            for image_id in self.board:
-                if image_id not in unique_image_ids:
-                    unique_image_ids.append(image_id)
+                # Obtener identificadores únicos de las imágenes del tablero
+                unique_image_ids = list(set(model.board))  # Usar set para evitar duplicados
 
-            #Descargar cada imagen con los identificadores unicos
-            for image_id in unique_image_ids:
-                image_url=f"{self.url_base}{image_id}.jpg"
-                image = recursos.descargar_imagen(image_url,self.cell_size)
+                # Descargar cada imagen con los identificadores únicos
+                for image_id in unique_image_ids:
+                    image_url = f"{model.url_base}{image_id}.png"
+                    # Asegúrate de que el tamaño sea una tupla
+                    size = (model.cell_size, model.cell_size) if isinstance(model.cell_size, int) else model.cell_size
+                    self.images[image_id] = descargar_imagen(image_url, size)
 
-            #indicar que todas las imágenes se han descargado y están listas
-            self.images_loaded.set()
+                    if self.images[image_id] is None:
+                    #if self.images is None:
+                        print(f"Error: No se pudo descargar la imagen {image_id}.png")
+                        continue  # Si falla la descarga, pasa a la siguiente imagen
 
-        #iniciar el hilo de carga de imágenes en segundo plane
-        threading.Thread(target=load_images_thread, daemon=True).start()
+
+                # Indicar que todas las imágenes se han descargado y están listas
+                print("Todas las imágenes han sido cargadas correctamente.")
+                model.images_loaded.set()
+            except Exception as e:
+                print(f"Error en el hilo de carga de imágenes: {e}")
+                model.images_loaded.set()  # Asegurarse de que el evento se marque aunque ocurra un error
+
+                # Iniciar el hilo de carga de imágenes en segundo plano
+            threading.Thread(target=load_images_thread, args=(self,), daemon=True).start()
+
+            # Esperar explícitamente hasta que todas las imágenes estén cargadas
+            self.images_loaded.wait()  # Esto bloquea el hilo principal hasta que se termine de cargar todo
+            print("Todas las imágenes han sido cargadas.")
+
 
     def images_are_loaded(self):
         #Verifica si todas las imágenes del juego han sido cargadas.
-        return self.images_loaded.is_set()
+        # print(len(self.images)== {"fácil":4,"medio":6,"difícil":8}.get(self.difficulty)**2//2)
+        # return len(self.images)== {"fácil":4,"medio":6,"difícil":8}.get(self.difficulty)
+
+        print(f"Cantidad de imágenes cargadas: {len(self.images)}")  # Depuración
+        # Aquí verificamos si realmente se han cargado imágenes en el diccionario
+        if len(self.images) == {"fácil": 4, "medio": 6, "difícil": 8}.get(self.difficulty) ** 2 // 2:
+            print("Las imágenes están completamente cargadas.")
+            return True
+        else:
+            print("Las imágenes aún no están completamente cargadas.")
+            return False
 
     def start_timer(self):
         #Reinicia el temporizador del juego

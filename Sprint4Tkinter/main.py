@@ -5,6 +5,7 @@ if __name__ == "__main__":
     #Inicializa la ventana principal de Tkinter
     root=tk.Tk()
     root.title("Juego de memoria")
+    root.geometry("600x700")
     #Inicia el controlador
     controller = GameController(root)
     #Crea el menú principal y pasa las funciones del controlador

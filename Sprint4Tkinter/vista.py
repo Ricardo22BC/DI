@@ -43,7 +43,15 @@ class GameView:
         # Actualizar la imagen de una carta específica en el tablero
         if pos in self.labels:
             label = self.labels[pos]
-            label.config(image=image_id)
+            image_path = f"images/{image_id}.jpg"  # Cambia esto según tu estructura de archivos
+            image = Image.open(image_path)
+
+            # Convertir la imagen al formato PhotoImage para Tkinter
+            tk_image = ImageTk.PhotoImage(image)
+
+            # Actualizar el label con la imagen
+            label.config(image=tk_image)
+            label.image = tk_image
 
     def reset_cards(self, pos1, pos2):
         # Restaurar las cartas a su imagen oculta

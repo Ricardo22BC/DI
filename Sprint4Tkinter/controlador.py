@@ -78,7 +78,7 @@ class GameController:
             self.loading_window.destroy()
             # Crear el tablero en la vista
             self.view= GameView(
-                self.root,
+                #self.root,
                 on_card_click_callback=self.on_card_click,
                 update_move_count_callback=self.update_move_count,
                 update_time_callback=self.update_time
@@ -89,7 +89,7 @@ class GameController:
             self.root.after(100, self.check_images_loaded)
 
 
-    def on_card_click(self, pos):
+    def on_card_click(self,event, pos):
         # Maneja el evento de clic en una carta del tablero
         if not self.timer_started:
             self.model.start_timer()
@@ -98,7 +98,8 @@ class GameController:
 
         # Almacena la posición de la carta seleccionada
         self.selected.append(pos)
-        self.view.update_board(pos, self.model.board[pos])
+        image = self.model.board[pos]
+        self.view.update_board(pos, image)
 
         # Verifica si se seleccionaron dos cartas
         if len(self.selected) == 2:
