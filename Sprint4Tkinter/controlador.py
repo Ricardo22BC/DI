@@ -59,7 +59,7 @@ class GameController:
     def start_game(self, difficulty):
         self.model = GameModel(difficulty, self.player_name)
         self.show_loading_window()
-        self.check_images_loaded()
+
 
     def show_loading_window(self,message="Cargando imágenes, por favor espere..."):
         # Crear ventana de carga

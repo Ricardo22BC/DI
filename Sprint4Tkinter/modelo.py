@@ -32,7 +32,7 @@ class GameModel:
         print(f"URL Base: {self.url_base}")
 
         self._generate_board()
-        self._load_images()
+       # self._load_images()
 
         self.start_time=None
         self.moves=0
@@ -60,7 +60,7 @@ class GameModel:
         def load_images_thread(model):
             try:
                 # Usa el atributo url_base para cargar la imagen oculta
-                hidden_image = descargar_imagen(f"{model.url_base}0.png", (model.cell_size, model.cell_size))
+                hidden_image = descargar_imagen(f"{model.url_base}OIP.jpeg", (model.cell_size, model.cell_size))
 
                 # Verificar que la imagen oculta se ha descargado
                 if hidden_image is None:
@@ -73,6 +73,7 @@ class GameModel:
                 # Descargar cada imagen con los identificadores únicos
                 for image_id in unique_image_ids:
                     image_url = f"{model.url_base}{image_id}.png"
+                    print(image_url)
                     # Asegúrate de que el tamaño sea una tupla
                     size = (model.cell_size, model.cell_size) if isinstance(model.cell_size, int) else model.cell_size
                     self.images[image_id] = descargar_imagen(image_url, size)
@@ -91,11 +92,11 @@ class GameModel:
                 model.images_loaded.set()  # Asegurarse de que el evento se marque aunque ocurra un error
 
                 # Iniciar el hilo de carga de imágenes en segundo plano
-            threading.Thread(target=load_images_thread, args=(self,), daemon=True).start()
+        threading.Thread(target=load_images_thread, args=(self,), daemon=True).start()
 
-            # Esperar explícitamente hasta que todas las imágenes estén cargadas
-            self.images_loaded.wait()  # Esto bloquea el hilo principal hasta que se termine de cargar todo
-            print("Todas las imágenes han sido cargadas.")
+        # Esperar explícitamente hasta que todas las imágenes estén cargadas
+        self.images_loaded.wait()  # Esto bloquea el hilo principal hasta que se termine de cargar todo
+        print("Todas las imágenes han sido cargadas.")
 
 
     def images_are_loaded(self):
