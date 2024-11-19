@@ -22,11 +22,13 @@ def descargar_imagen(url,size):
             raise ValueError(f"La URL no contiene una imagen válida: {url}")
     #Abrir imagen desde el flujo de bytes
         imagen = Image.open(BytesIO(respuesta.content))
+
+        if imagen.mode == "RGBA":
+            imagen = imagen.convert("RGB")
     #Ajusta al tamaño especificado usando el filtro LANCZOS para una redimensionada de alta calidad
         imagen=imagen.resize(size,Image.LANCZOS)
     #La imagen se convierte en un formato compatible con Tkinter
         imagen_tk = ImageTk.PhotoImage(imagen)
-
         print(f"Imagen descargada correctamente de {url}")
     #Devolvemos la imagen
         return imagen_tk
@@ -39,7 +41,7 @@ def descargar_imagen(url,size):
         print(f"Error en el procesamiento de la imagen: {e}")
     except Exception as e:
         print(f"Ha ocurrido un error inesperado: {e}")
-        return None
+    return None
 
 
 

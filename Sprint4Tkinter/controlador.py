@@ -73,7 +73,8 @@ class GameController:
         self.root.after(100, self.check_images_loaded)
 
     def check_images_loaded(self):
-        if self.model.images_are_loaded():
+        #if self.model.images_are_loaded():
+        if self.model.images_loaded:
             # Cerrar ventana de carga
             self.loading_window.destroy()
             # Crear el tablero en la vista

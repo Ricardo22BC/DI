@@ -60,7 +60,7 @@ class GameModel:
         def load_images_thread(model):
             try:
                 # Usa el atributo url_base para cargar la imagen oculta
-                hidden_image = descargar_imagen(f"{model.url_base}OIP.jpeg", (model.cell_size, model.cell_size))
+                hidden_image = descargar_imagen(f"{model.url_base}17.png", (model.cell_size, model.cell_size))
 
                 # Verificar que la imagen oculta se ha descargado
                 if hidden_image is None:

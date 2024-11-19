@@ -43,7 +43,7 @@ class GameView:
         # Actualizar la imagen de una carta específica en el tablero
         if pos in self.labels:
             label = self.labels[pos]
-            image_path = f"images/{image_id}.jpg"  # Cambia esto según tu estructura de archivos
+            image_path = f"images/{image_id}.png"  # Cambia esto según tu estructura de archivos
             image = Image.open(image_path)
 
             # Convertir la imagen al formato PhotoImage para Tkinter
