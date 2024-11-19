@@ -3,7 +3,7 @@ import time
 import random
 import datetime
 
-import recursos
+
 from recursos import descargar_imagen
 
 class GameModel:
@@ -27,7 +27,7 @@ class GameModel:
         self.images_loaded = threading.Event()
 
         # self.pairs_found=0
-        self.url_base = "https://raw.githubusercontent.com/Ricardo22BC/DI/refs/heads/main/images/"
+        self.url_base = "https://raw.githubusercontent.com/Ricardo22BC/DI/refs/heads/main/Sprint4Tkinter/images/"
         # Debug: Verifica que self.url_base está correctamente asignado
         print(f"URL Base: {self.url_base}")
 
