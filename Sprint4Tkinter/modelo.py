@@ -4,7 +4,7 @@ import random
 import datetime
 
 
-from recursos import descargar_imagen
+from recursos import descargar_imagenes
 
 class GameModel:
     def __init__(self, difficulty, player_name, cell_size=100):
@@ -60,7 +60,7 @@ class GameModel:
         def load_images_thread(model):
             try:
                 # Usa el atributo url_base para cargar la imagen oculta
-                hidden_image = descargar_imagen(f"{model.url_base}17.png", (model.cell_size, model.cell_size))
+                hidden_image = descargar_imagenes(f"{model.url_base}17.png", (model.cell_size, model.cell_size))
 
                 # Verificar que la imagen oculta se ha descargado
                 if hidden_image is None:
@@ -76,7 +76,7 @@ class GameModel:
                     print(image_url)
                     # Asegúrate de que el tamaño sea una tupla
                     size = (model.cell_size, model.cell_size) if isinstance(model.cell_size, int) else model.cell_size
-                    self.images[image_id] = descargar_imagen(image_url, size)
+                    self.images[image_id] = descargar_imagenes(image_url, size)
 
                     if self.images[image_id] is None:
                     #if self.images is None:
@@ -112,6 +112,7 @@ class GameModel:
         else:
             print("Las imágenes aún no están completamente cargadas.")
             return False
+
 
     def start_timer(self):
         #Reinicia el temporizador del juego
