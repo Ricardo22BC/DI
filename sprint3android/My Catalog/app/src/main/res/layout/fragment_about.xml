@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AboutFragment">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:text="Implementa un Bottom Navigationn Views en una nueva MainActivity y traslada el
+código de las actividades anteriores a los Fragments. Añade un nuevo
+AboutFragment con un único TextView de contenido libre, y haz que el usuario
+pueda navegar entre AboutFragment y CatalogFragment usando un
+BottomNavigationView ." />
+
+</FrameLayout>
